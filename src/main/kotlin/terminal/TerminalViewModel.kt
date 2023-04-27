@@ -22,6 +22,7 @@ class TerminalViewModel(
             x = 0,
             y = 0,
             ktorStatus = true,
+            logScreen = null,
         )
     )
     private val width = 20
@@ -247,7 +248,7 @@ class TerminalViewModel(
         val x: Int,
         val y: Int,
         val ktorStatus: Boolean,
-        val logScreen: LogScreen? = null,
+        val logScreen: LogScreen?,
     ) {
         data class LogScreen(
             val item: Forward,
