@@ -2,12 +2,10 @@ package terminal
 
 import Forward
 import androidx.compose.runtime.MutableState
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import org.jline.terminal.TerminalBuilder
 import java.io.Reader
 
@@ -62,12 +60,6 @@ class TerminalViewModel(
                         logScreen = run logScreen@{
                             val logScreen = viewModelState.logScreen ?: return@logScreen null
 
-                            println(
-                                "logScreen.item.input.value=${logScreen.item.input.value}"
-                            )
-                            println(
-                                "logScreen.index=${logScreen.index}"
-                            )
                             TerminalUiState.LogScreen(
                                 line = logScreen.item.input.value
                                     .drop(logScreen.index)
