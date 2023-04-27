@@ -1,0 +1,10 @@
+destination:
+  command: |
+    echo "admin@example.com"
+
+key:
+  text: ~/.ssh/key
+
+forward:
+  10002: example1.internal:8080
+  10003: example2.internal:8080
