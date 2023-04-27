@@ -24,7 +24,6 @@ class Forward(
             "-N",
             destination
         )
-        println(command.joinToString(" "))
         val process = ProcessBuilder(command).start()
         this.process = process
     }
