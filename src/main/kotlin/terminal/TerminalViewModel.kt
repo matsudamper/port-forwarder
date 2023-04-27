@@ -179,7 +179,9 @@ class TerminalViewModel(
                                     it.copy(
                                         logScreen = ViewModelState.LogScreen(
                                             item = forward,
-                                            index = forward.input.value.size - LogLength,
+                                            index = (forward.input.value.size - LogLength)
+                                                .coerceAtMost(forward.input.value.size - 1)
+                                                .coerceAtLeast(0),
                                         )
                                     )
                                 }
