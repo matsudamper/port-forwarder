@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.jakewharton.mosaic.ui.Color
 import com.jakewharton.mosaic.ui.Column
+import com.jakewharton.mosaic.ui.Row
 import com.jakewharton.mosaic.ui.Text
 
 @Composable
@@ -30,6 +31,35 @@ internal fun MosaicRoot(
             logScreen.line.forEach {
                 Text(
                     value = it,
+                )
+            }
+            Row {
+                Text(
+                    value = "Out",
+                    background = if (logScreen.type == TerminalUiState.LogScreen.Type.Out) {
+                        Color.White
+                    } else {
+                        null
+                    },
+                    color = if (logScreen.type == TerminalUiState.LogScreen.Type.Out) {
+                        Color.Black
+                    } else {
+                        null
+                    },
+                )
+                Text("  /  ")
+                Text(
+                    value = "Error",
+                    background = if (logScreen.type == TerminalUiState.LogScreen.Type.Error) {
+                        Color.White
+                    } else {
+                        null
+                    },
+                    color = if (logScreen.type == TerminalUiState.LogScreen.Type.Error) {
+                        Color.Black
+                    } else {
+                        null
+                    },
                 )
             }
         } else {

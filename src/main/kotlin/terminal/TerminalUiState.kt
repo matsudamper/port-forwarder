@@ -26,5 +26,11 @@ data class TerminalUiState(
 
     data class LogScreen(
         val line: List<String>,
-    )
+        val type: Type,
+    ) {
+        enum class Type {
+            Out,
+            Error,
+        }
+    }
 }

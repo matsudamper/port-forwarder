@@ -90,8 +90,20 @@ class TerminalViewModel(
                     val detect = detectButton(reader)
 
                     when (detect) {
-                        Arrow.Left -> Unit
-                        Arrow.Right -> Unit
+                        Arrow.Left,
+                        Arrow.Right -> {
+                            viewModelStateFlow.update {
+                                it.copy(
+                                    logScreen = it.logScreen?.copy(
+                                        type = when (logScreen.type) {
+                                            TerminalUiState.LogScreen.Type.Out -> TerminalUiState.LogScreen.Type.Error
+                                            TerminalUiState.LogScreen.Type.Error -> TerminalUiState.LogScreen.Type.Out
+                                        },
+                                    )
+                                )
+                            }
+                        }
+
                         Arrow.Up -> {
                             viewModelStateFlow.update {
                                 it.copy(
@@ -176,6 +188,7 @@ class TerminalViewModel(
                                             index = (forward.input.value.size - LogLength)
                                                 .coerceAtMost(forward.input.value.size - 1)
                                                 .coerceAtLeast(0),
+                                            type = TerminalUiState.LogScreen.Type.Out
                                         )
                                     )
                                 }
@@ -246,6 +259,7 @@ class TerminalViewModel(
         data class LogScreen(
             val item: Forward,
             val index: Int,
+            val type: TerminalUiState.LogScreen.Type,
         )
     }
 
