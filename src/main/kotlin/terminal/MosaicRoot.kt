@@ -12,14 +12,7 @@ internal fun MosaicRoot(
     uiState: TerminalUiState,
 ) {
     Column {
-        val ktorStatusText = remember(uiState.ktorStatus) {
-            if (uiState.ktorStatus) {
-                "active"
-            } else {
-                "down"
-            }
-        }
-        Text("Ktor Status: $ktorStatusText")
+        KtorStatus(uiState.ktorStatus)
         Text("count: ${uiState.count}")
 
         Text("x: ${uiState.x}")
@@ -79,4 +72,26 @@ internal fun MosaicRoot(
             }
         }
     }
+}
+
+@Composable
+private fun KtorStatus(status: Boolean) {
+    val ktorStatusText = remember(status) {
+        if (status) {
+            "active"
+        } else {
+            "down"
+        }
+    }
+    val color = remember(status) {
+        if (status) {
+            Color.Green
+        } else {
+            Color.Red
+        }
+    }
+    Text(
+        value = "Ktor Status: $ktorStatusText",
+        color = color
+    )
 }
