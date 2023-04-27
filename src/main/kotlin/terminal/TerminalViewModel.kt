@@ -192,9 +192,9 @@ class TerminalViewModel(
         }
     }
 
-    fun shotDownKtor() {
+    fun ktorStatus(value: Boolean) {
         viewModelStateFlow.update {
-            it.copy(ktorStatus = false)
+            it.copy(ktorStatus = value)
         }
     }
 

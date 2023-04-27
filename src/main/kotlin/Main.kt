@@ -64,18 +64,24 @@ suspend fun main(args: Array<String>) {
         ).also {
             it.init()
         }
-        launch {
+        launch(Job()) {
             embeddedServer(
                 CIO,
                 port = 8881,
                 module = {
-                    myApplicationModule()
+                    myApplicationModule(
+                        onStart = {
+                            terminalViewModel.ktorStatus(true)
+                        },
+                        onStop = {
+                            terminalViewModel.ktorStatus(false)
+                        }
+                    )
                 },
                 configure = {
 
                 },
-            ).start(wait = true)
-            terminalViewModel.shotDownKtor()
+            ).start(wait = false)
         }
 
         launch {
@@ -158,7 +164,16 @@ private fun createForward(config: Config): List<Forward> {
     }
 }
 
-private fun Application.myApplicationModule() {
+private fun Application.myApplicationModule(
+    onStart: () -> Unit,
+    onStop: () -> Unit,
+) {
+    environment.monitor.subscribe(ApplicationStopping) {
+        onStart()
+    }
+    environment.monitor.subscribe(ApplicationStopping) {
+        onStop()
+    }
     routing {
         get("/") {
             val response = buildString {
