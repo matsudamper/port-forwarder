@@ -63,7 +63,8 @@ class TerminalViewModel(
                             TerminalUiState.LogScreen(
                                 line = logScreen.item.input.value
                                     .drop(logScreen.index)
-                                    .take(LogLength)
+                                    .take(LogLength),
+                                type = logScreen.type,
                             )
                         },
                     )
