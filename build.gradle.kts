@@ -35,17 +35,18 @@ tasks.withType(Jar::class) {
             }
         }
     )
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
 
     implementation(kotlin("stdlib"))
 
     implementation("com.charleskorn.kaml:kaml:0.53.0")
+    implementation("org.apache.sshd:sshd-mina:2.10.0")
     implementation("org.jline:jline:3.23.0")
 
     val ktorVersion = "2.2.4"

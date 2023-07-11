@@ -1,18 +1,22 @@
-import androidx.compose.runtime.*
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.charleskorn.kaml.Yaml
 import com.jakewharton.mosaic.runMosaicBlocking
-import terminal.TerminalViewModel
 import io.ktor.server.application.*
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.awaitCancellation
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.decodeFromString
 import terminal.MosaicRoot
+import terminal.TerminalViewModel
 import java.io.File
-import java.lang.StringBuilder
 import kotlin.system.exitProcess
 
 
@@ -38,49 +42,52 @@ suspend fun main(args: Array<String>) {
             Global.forwards.clear()
             Global.forwards.addAll(forward)
 
-            Global.forwards.forEach {
+            val forwardJobs = Global.forwards.map {
                 launch {
-                    it.start()
-                    it.collectText()
+                    runCatching {
+                        it.start()
+                        it.collectText()
+                    }.onFailure {
+                        throw RuntimeException("$it", it)
+                    }
                 }
             }
 
             Runtime.getRuntime().addShutdownHook(
-                object : Thread() {
-                    override fun run() {
-                        println("shutdown: size=${Global.forwards.size}")
-                        Global.forwards.forEach {
-                            it.kill()
+                    object : Thread() {
+                        override fun run() {
+                            println("shutdown: size=${Global.forwards.size}")
+                            forwardJobs.forEach { it.cancel() }
+                            Global.forwards.forEach { it.kill() }
+                            println("shutdown: finish")
                         }
-                        println("shutdown: finish")
                     }
-                }
             )
         }
         val terminalViewModel = TerminalViewModel(
-            coroutineScope = this,
-            forwards = Global.forwards,
-            listener = terminalListener
+                coroutineScope = this,
+                forwards = Global.forwards,
+                listener = terminalListener
         ).also {
             it.init()
         }
         launch(Job()) {
             embeddedServer(
-                CIO,
-                port = 8881,
-                module = {
-                    myApplicationModule(
-                        onStart = {
-                            terminalViewModel.ktorStatus(true)
-                        },
-                        onStop = {
-                            terminalViewModel.ktorStatus(false)
-                        }
-                    )
-                },
-                configure = {
+                    CIO,
+                    port = port,
+                    module = {
+                        myApplicationModule(
+                                onStart = {
+                                    terminalViewModel.ktorStatus(true)
+                                },
+                                onStop = {
+                                    terminalViewModel.ktorStatus(false)
+                                }
+                        )
+                    },
+                    configure = {
 
-                },
+                    },
             ).start(wait = false)
         }
 
@@ -90,7 +97,7 @@ suspend fun main(args: Array<String>) {
 
                 setContent {
                     MosaicRoot(
-                        uiState = terminalViewModel.uiStateFlow.collectAsState().value,
+                            uiState = terminalViewModel.uiStateFlow.collectAsState().value,
                     )
                 }
                 for (item in 0 until 5) {
@@ -142,7 +149,6 @@ private fun createForward(config: Config): List<Forward> {
         throw NullPointerException("key is null")
     }
 
-
     return config.forward.map {
         val port = it.key
         val host = it.value
@@ -155,18 +161,18 @@ private fun createForward(config: Config): List<Forward> {
         }
 
         Forward(
-            localPort = port,
-            serverHost = serverHost,
-            serverPort = serverPort,
-            keyPath = key,
-            destination = destination,
+                localPort = port,
+                serverHost = serverHost,
+                serverPort = serverPort,
+                keyPath = key,
+                destination = destination,
         )
     }
 }
 
 private fun Application.myApplicationModule(
-    onStart: () -> Unit,
-    onStop: () -> Unit,
+        onStart: () -> Unit,
+        onStop: () -> Unit,
 ) {
     environment.monitor.subscribe(ApplicationStopping) {
         onStart()
