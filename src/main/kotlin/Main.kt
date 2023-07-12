@@ -23,7 +23,7 @@ import kotlin.system.exitProcess
 suspend fun main(args: Array<String>) {
 //    System.setProperty("logback.configurationFile", "logback.xml")
     val options = OptionParser(args.toList()).get()
-    val port = options["port"]?.toIntOrNull() ?: 8088
+    val port = options["port"]?.toIntOrNull()
     val configFile = options["config"]
 
     println("start server...")
@@ -71,24 +71,26 @@ suspend fun main(args: Array<String>) {
         ).also {
             it.init()
         }
-        launch(Job()) {
-            embeddedServer(
-                    CIO,
-                    port = port,
-                    module = {
-                        myApplicationModule(
-                                onStart = {
-                                    terminalViewModel.ktorStatus(true)
-                                },
-                                onStop = {
-                                    terminalViewModel.ktorStatus(false)
-                                }
-                        )
-                    },
-                    configure = {
+        if (port != null) {
+            launch(Job()) {
+                embeddedServer(
+                        CIO,
+                        port = port,
+                        module = {
+                            myApplicationModule(
+                                    onStart = {
+                                        terminalViewModel.ktorStatus(true)
+                                    },
+                                    onStop = {
+                                        terminalViewModel.ktorStatus(false)
+                                    }
+                            )
+                        },
+                        configure = {
 
-                    },
-            ).start(wait = false)
+                        },
+                ).start(wait = false)
+            }
         }
 
         launch {
