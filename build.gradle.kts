@@ -90,10 +90,12 @@ tasks.withType<KotlinCompile> {
 graalvmNative {
     binaries {
         named("main") {
-            javaLauncher.set(javaToolchains.launcherFor {
-                languageVersion.set(JavaLanguageVersion.of(17))
-                vendor.set(JvmVendorSpec.matching("GraalVM Community"))
-            })
+            javaLauncher.set(
+                javaToolchains.launcherFor {
+                    languageVersion.set(JavaLanguageVersion.of(17))
+                    vendor.set(JvmVendorSpec.matching("GraalVM Community"))
+                },
+            )
             imageName.set(base.archivesName.get())
             mainClass.set(application.mainClass.get())
 
