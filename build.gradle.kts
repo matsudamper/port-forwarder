@@ -94,7 +94,7 @@ graalvmNative {
             javaLauncher.set(
                 javaToolchains.launcherFor {
                     languageVersion.set(JavaLanguageVersion.of(17))
-                    vendor.set(JvmVendorSpec.matching("GraalVM Community"))
+                    vendor.set(JvmVendorSpec.matching("GraalVM"))
                 },
             )
             imageName.set(base.archivesName.get())
