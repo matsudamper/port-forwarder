@@ -12,6 +12,7 @@ jobs:
         with:
           version: 'latest'
           java-version: '17'
+          distribution: 'graalvm'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: ./gradlew nativeCompile
@@ -23,6 +24,7 @@ jobs:
         with:
           version: 'latest'
           java-version: '17'
+          distribution: 'graalvm'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: ./gradlew nativeCompile
@@ -34,6 +36,7 @@ jobs:
         with:
           version: 'latest'
           java-version: '17'
+          distribution: 'graalvm'
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: ./gradlew nativeCompile
