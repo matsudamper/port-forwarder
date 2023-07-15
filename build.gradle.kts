@@ -84,7 +84,8 @@ allprojects {
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(17))
-        vendor.set(JvmVendorSpec.matching("GraalVM"))
+        vendor.set(JvmVendorSpec.GRAAL_VM)
+
     }
 }
 
@@ -94,7 +95,7 @@ graalvmNative {
             javaLauncher.set(
                 javaToolchains.launcherFor {
                     languageVersion.set(JavaLanguageVersion.of(17))
-                    vendor.set(JvmVendorSpec.matching("GraalVM"))
+                    vendor.set(JvmVendorSpec.GRAAL_VM)
                 },
             )
             imageName.set(base.archivesName.get())
