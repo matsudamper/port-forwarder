@@ -20,7 +20,7 @@ version = "1.0-SNAPSHOT"
 
 application {
     applicationDefaultJvmArgs = listOf(
-        "-agentlib:native-image-agent=config-merge-dir=src/main/resources/META-INF/native-image/auto/"
+        "-agentlib:native-image-agent=config-merge-dir=src/main/resources/META-INF/native-image/auto/",
     )
     mainClass.set("MainKt")
 }
@@ -34,8 +34,14 @@ tasks.withType(Jar::class) {
             it.toList().map {
                 if (it.isDirectory) it else zipTree(it)
             }
-        }
-    )
+        },
+    ) {
+        exclude(
+            "META-INF/*.SF",
+            "META-INF/*.DSA",
+            "META-INF/*.RSA",
+        )
+    }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
@@ -78,16 +84,18 @@ allprojects {
 graalvmNative {
     binaries {
         named("main") {
-            javaLauncher.set(javaToolchains.launcherFor {
-                languageVersion.set(JavaLanguageVersion.of(17))
-                vendor.set(JvmVendorSpec.matching("GraalVM Community"))
-            })
+            javaLauncher.set(
+                javaToolchains.launcherFor {
+                    languageVersion.set(JavaLanguageVersion.of(17))
+                    vendor.set(JvmVendorSpec.matching("GraalVM Community"))
+                },
+            )
             imageName.set(base.archivesName.get())
             mainClass.set("MainKt")
 
             buildArgs.addAll(
                 "-H:ReflectionConfigurationFiles=${projectDir}/reflection-config.json",
-                "-H:ResourceConfigurationFiles=${projectDir}/resource-config.json"
+                "-H:ResourceConfigurationFiles=${projectDir}/resource-config.json",
             )
         }
     }
