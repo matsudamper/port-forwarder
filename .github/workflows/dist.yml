@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         os: [ "ubuntu", "windows", "macos" ]
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}-latest
     steps:
       - uses: actions/checkout@v3
       - uses: graalvm/setup-graalvm@v1
