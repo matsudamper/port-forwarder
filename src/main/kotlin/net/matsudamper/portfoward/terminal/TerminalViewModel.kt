@@ -1,6 +1,6 @@
-package terminal
+package net.matsudamper.portfoward.terminal
 
-import Forward
+import net.matsudamper.portfoward.Forward
 import androidx.compose.runtime.MutableState
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +21,7 @@ class TerminalViewModel(
             y = 0,
             ktorStatus = true,
             logScreen = null,
-        )
+        ),
     )
     private val width = 20
     private val height = 20
@@ -34,10 +34,10 @@ class TerminalViewModel(
             count = 0,
             ktorStatus = true,
             screen = TerminalUiState.Screen.Root(
-                items = listOf()
+                items = listOf(),
             ),
             logScreen = null,
-        )
+        ),
     ).also { uiStateFlow ->
         coroutineScope.launch {
             viewModelStateFlow.collect { viewModelState ->
@@ -54,7 +54,7 @@ class TerminalViewModel(
                                         name = text,
                                         selected = index == viewModelState.y,
                                     )
-                                }
+                                },
                         ),
                         ktorStatus = viewModelState.ktorStatus,
                         logScreen = run logScreen@{
@@ -91,7 +91,8 @@ class TerminalViewModel(
 
                     when (detect) {
                         Arrow.Left,
-                        Arrow.Right -> {
+                        Arrow.Right,
+                        -> {
                             viewModelStateFlow.update {
                                 it.copy(
                                     logScreen = it.logScreen?.copy(
@@ -99,7 +100,7 @@ class TerminalViewModel(
                                             TerminalUiState.LogScreen.Type.Out -> TerminalUiState.LogScreen.Type.Error
                                             TerminalUiState.LogScreen.Type.Error -> TerminalUiState.LogScreen.Type.Out
                                         },
-                                    )
+                                    ),
                                 )
                             }
                         }
@@ -110,8 +111,8 @@ class TerminalViewModel(
                                     logScreen = logScreen.copy(
                                         index = logScreen.index.minus(1)
                                             .coerceAtMost(logScreen.item.input.value.size - 1)
-                                            .coerceAtLeast(0)
-                                    )
+                                            .coerceAtLeast(0),
+                                    ),
                                 )
                             }
                         }
@@ -122,8 +123,8 @@ class TerminalViewModel(
                                     logScreen = logScreen.copy(
                                         index = logScreen.index.plus(1)
                                             .coerceAtMost(logScreen.item.input.value.size - 1)
-                                            .coerceAtLeast(0)
-                                    )
+                                            .coerceAtLeast(0),
+                                    ),
                                 )
                             }
                         }
@@ -144,7 +145,7 @@ class TerminalViewModel(
                         Arrow.Left -> {
                             viewModelStateFlow.update {
                                 it.copy(
-                                    x = (it.x - 1).coerceAtLeast(0)
+                                    x = (it.x - 1).coerceAtLeast(0),
                                 )
                             }
                         }
@@ -152,7 +153,7 @@ class TerminalViewModel(
                         Arrow.Right -> {
                             viewModelStateFlow.update {
                                 it.copy(
-                                    x = (it.x + 1).coerceAtMost(width)
+                                    x = (it.x + 1).coerceAtMost(width),
                                 )
                             }
                         }
@@ -162,7 +163,7 @@ class TerminalViewModel(
                                 it.copy(
                                     y = (it.y - 1)
                                         .coerceAtLeast(0)
-                                        .coerceAtMost(listMaxSize)
+                                        .coerceAtMost(listMaxSize),
                                 )
                             }
                         }
@@ -172,7 +173,7 @@ class TerminalViewModel(
                                 it.copy(
                                     y = (it.y + 1)
                                         .coerceAtLeast(0)
-                                        .coerceAtMost(listMaxSize)
+                                        .coerceAtMost(listMaxSize),
                                 )
                             }
                         }
@@ -188,8 +189,8 @@ class TerminalViewModel(
                                             index = (forward.input.value.size - LogLength)
                                                 .coerceAtMost(forward.input.value.size - 1)
                                                 .coerceAtLeast(0),
-                                            type = TerminalUiState.LogScreen.Type.Out
-                                        )
+                                            type = TerminalUiState.LogScreen.Type.Out,
+                                        ),
                                     )
                                 }
                             } else {
