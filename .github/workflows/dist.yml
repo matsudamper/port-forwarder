@@ -16,6 +16,12 @@ jobs:
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: ./gradlew nativeCompile
+      - name: Upload binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: native-${{ matrix.os }}
+          path: build/native
+
   ubuntu-compile:
     runs-on: ubuntu-latest
     steps:
@@ -28,6 +34,12 @@ jobs:
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: ./gradlew nativeCompile
+      - name: Upload binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: native-${{ matrix.os }}
+          path: build/native
+
   macos-compile:
     runs-on: macos-latest
     steps:
@@ -40,3 +52,8 @@ jobs:
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: ./gradlew nativeCompile
+      - name: Upload binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: native-${{ matrix.os }}
+          path: build/native
