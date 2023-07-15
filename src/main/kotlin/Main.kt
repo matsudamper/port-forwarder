@@ -57,8 +57,8 @@ suspend fun main(args: Array<String>) {
                     object : Thread() {
                         override fun run() {
                             println("shutdown: size=${Global.forwards.size}")
-                            forwardJobs.forEach { it.cancel() }
                             Global.forwards.forEach { it.kill() }
+                            forwardJobs.forEach { it.cancel() }
                             println("shutdown: finish")
                         }
                     }
