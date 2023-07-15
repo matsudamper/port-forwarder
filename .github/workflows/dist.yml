@@ -4,43 +4,10 @@ on:
     branches: [ main ]
 
 jobs:
-  windows-compile:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: graalvm/setup-graalvm@v1
-        with:
-          version: 'latest'
-          java-version: '17'
-          distribution: 'graalvm-community'
-          components: 'native-image'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-      - run: ./gradlew nativeCompile
-      - name: Upload binary
-        uses: actions/upload-artifact@v2
-        with:
-          name: native-${{ matrix.os }}
-          path: build/native
-
-  ubuntu-compile:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: graalvm/setup-graalvm@v1
-        with:
-          version: 'latest'
-          java-version: '17'
-          distribution: 'graalvm-community'
-          components: 'native-image'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-      - run: ./gradlew nativeCompile
-      - name: Upload binary
-        uses: actions/upload-artifact@v2
-        with:
-          name: native-${{ matrix.os }}
-          path: build/native
-
-  macos-compile:
+  compile_and_dist:
+    strategy:
+      matrix:
+        os: [ "ubuntu", "windows", "macos" ]
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
