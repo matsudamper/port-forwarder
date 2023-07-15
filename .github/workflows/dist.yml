@@ -30,17 +30,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download Linux artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/download-artifact@v2
         with:
           name: native-ubuntu
           path: ubuntu
       - name: Download Windows artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/download-artifact@v2
         with:
           name: native-windows
           path: windows
       - name: Download Macos artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/download-artifact@v2
         with:
           name: native-macos
           path: macos
