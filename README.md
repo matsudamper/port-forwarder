@@ -16,7 +16,7 @@ GraalVM対応で、Javaの実行環境がなくても動作する。
 
 ## config
 `destination`と`key`の指定には`command`か`text`が使用できる。
-`forward`はkeyにローカルポート、valueにリモートホストとポートを指定する。
+`forward`はkeyにローカルの情報、valueにリモートホストとポートを指定する。
 ```
 destination:
   command: |
@@ -26,6 +26,6 @@ key:
   text: ~/.ssh/key
 
 forward:
-  10002: example1.internal:8080
-  10003: example2.internal:8080
+  localhost:10002: example1.internal:8080
+  172.17.0.1:10003: example2.internal:8080
 ```
