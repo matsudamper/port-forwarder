@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.archivesName
+
 plugins {
     id("org.jetbrains.kotlin.plugin.allopen") version "1.8.20"
     kotlin("jvm") version "1.8.20"
@@ -84,14 +86,12 @@ allprojects {
 graalvmNative {
     binaries {
         named("main") {
-            javaLauncher.set(
-                javaToolchains.launcherFor {
-                    languageVersion.set(JavaLanguageVersion.of(17))
-                    vendor.set(JvmVendorSpec.GRAAL_VM)
-                },
-            )
+            javaLauncher.set(javaToolchains.launcherFor {
+                languageVersion.set(JavaLanguageVersion.of(17))
+                vendor.set(JvmVendorSpec.matching("GraalVM Community"))
+            })
             imageName.set(base.archivesName.get())
-            mainClass.set("MainKt")
+            mainClass.set(application.mainClass.get())
 
             buildArgs.addAll(
                 "-H:ReflectionConfigurationFiles=${projectDir}/reflection-config.json",
