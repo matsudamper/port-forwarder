@@ -1,4 +1,5 @@
 config.yml
+*.config.yml
 local.properties
 
 # Auto Generated ↓
