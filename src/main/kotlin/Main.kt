@@ -4,20 +4,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.charleskorn.kaml.Yaml
 import com.jakewharton.mosaic.runMosaicBlocking
-import io.ktor.server.application.*
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.awaitCancellation
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import kotlinx.serialization.decodeFromString
-import terminal.MosaicRoot
-import terminal.TerminalViewModel
+import net.matsudamper.portfoward.server.myApplicationModule
+import net.matsudamper.portfoward.terminal.MosaicRoot
+import net.matsudamper.portfoward.terminal.TerminalViewModel
 import java.io.File
 import kotlin.system.exitProcess
+import net.matsudamper.portfoward.Config
+import net.matsudamper.portfoward.Global
+import net.matsudamper.portfoward.OptionParser
 
 
 suspend fun main(args: Array<String>) {
@@ -38,57 +36,60 @@ suspend fun main(args: Array<String>) {
     val config = Yaml.default.decodeFromString<Config>(File(configFile).readText())
     runBlocking {
         launch {
-            val forward = createForward(config)
+            val forwards = createForward(config)
             Global.forwards.clear()
-            Global.forwards.addAll(forward)
+            Global.forwards.addAll(forwards)
 
-            val forwardJobs = Global.forwards.map {
+            val forwardJobs = Global.forwards.map { forward ->
                 launch {
-                    runCatching {
-                        it.start()
-                        it.collectText()
-                    }.onFailure {
-                        throw RuntimeException("$it", it)
+                    try {
+                        forward.start()
+                        forward.collectText()
+                    } catch (_: CancellationException) {
+
+                    } catch (e: Throwable) {
+                        e.printStackTrace()
+                        throw RuntimeException("$e", e)
                     }
                 }
             }
 
             Runtime.getRuntime().addShutdownHook(
-                    object : Thread() {
-                        override fun run() {
-                            println("shutdown: size=${Global.forwards.size}")
-                            Global.forwards.forEach { it.kill() }
-                            forwardJobs.forEach { it.cancel() }
-                            println("shutdown: finish")
-                        }
+                object : Thread() {
+                    override fun run() {
+                        println("shutdown: size=${Global.forwards.size}")
+                        Global.forwards.forEach { it.kill() }
+                        forwardJobs.forEach { it.cancel() }
+                        println("shutdown: finish")
                     }
+                },
             )
         }
         val terminalViewModel = TerminalViewModel(
-                coroutineScope = this,
-                forwards = Global.forwards,
-                listener = terminalListener
+            coroutineScope = this,
+            forwards = Global.forwards,
+            listener = terminalListener,
         ).also {
             it.init()
         }
         if (port != null) {
             launch(Job()) {
                 embeddedServer(
-                        CIO,
-                        port = port,
-                        module = {
-                            myApplicationModule(
-                                    onStart = {
-                                        terminalViewModel.ktorStatus(true)
-                                    },
-                                    onStop = {
-                                        terminalViewModel.ktorStatus(false)
-                                    }
-                            )
-                        },
-                        configure = {
+                    CIO,
+                    port = port,
+                    module = {
+                        myApplicationModule(
+                            onStart = {
+                                terminalViewModel.ktorStatus(true)
+                            },
+                            onStop = {
+                                terminalViewModel.ktorStatus(false)
+                            },
+                        )
+                    },
+                    configure = {
 
-                        },
+                    },
                 ).start(wait = false)
             }
         }
@@ -99,7 +100,7 @@ suspend fun main(args: Array<String>) {
 
                 setContent {
                     MosaicRoot(
-                            uiState = terminalViewModel.uiStateFlow.collectAsState().value,
+                        uiState = terminalViewModel.uiStateFlow.collectAsState().value,
                     )
                 }
                 for (item in 0 until 5) {
@@ -144,26 +145,30 @@ private fun createForward(config: Config): List<Forward> {
             it.inputReader().readText()
         }.takeIf { it.isNotBlank() }
     } else {
-        config.key.text
-    }
-
-    if (key == null) {
-        throw NullPointerException("key is null")
+        config.key.text?.takeIf { it.isNotBlank() }
     }
 
     return config.forward.map {
-        val port = it.key
-        val host = it.value
+        val local = it.key
+        val server = it.value
+
+        val localHost: String
+        val localPort: Int
+        local.split(":").also { hostAndPort ->
+            localHost = hostAndPort[0]
+            localPort = hostAndPort[1].toInt()
+        }
 
         val serverHost: String
         val serverPort: Int
-        host.split(":").also { hostAndPort ->
+        server.split(":").also { hostAndPort ->
             serverHost = hostAndPort[0]
             serverPort = hostAndPort[1].toInt()
         }
 
         Forward(
-                localPort = port,
+                localHost = localHost,
+                localPort = localPort,
                 serverHost = serverHost,
                 serverPort = serverPort,
                 keyPath = key,
