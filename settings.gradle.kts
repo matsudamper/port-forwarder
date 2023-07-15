@@ -5,4 +5,9 @@ dependencyResolutionManagement {
     repositories {
         mavenCentral()
     }
+    versionCatalogs {
+        create("libs") {
+            plugin("ktlint", "org.jlleitschuh.gradle.ktlint").version("11.3.1")
+        }
+    }
 }

@@ -4,6 +4,7 @@ plugins {
     id("org.graalvm.buildtools.native") version "0.9.18"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.8.20"
     application
+    alias(libs.plugins.ktlint)
 }
 
 buildscript {
@@ -65,6 +66,15 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+allprojects {
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
+
+    configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+
+    }
+}
+
 graalvmNative {
     binaries {
         named("main") {
