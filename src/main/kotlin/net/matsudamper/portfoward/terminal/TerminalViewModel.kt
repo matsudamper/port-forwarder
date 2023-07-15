@@ -1,6 +1,6 @@
 package net.matsudamper.portfoward.terminal
 
-import Forward
+import net.matsudamper.portfoward.Forward
 import androidx.compose.runtime.MutableState
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow

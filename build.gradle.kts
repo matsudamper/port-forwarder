@@ -22,12 +22,12 @@ application {
     applicationDefaultJvmArgs = listOf(
         "-agentlib:native-image-agent=config-merge-dir=src/main/resources/META-INF/native-image/auto/",
     )
-    mainClass.set("MainKt")
+    mainClass.set("net.matsudamper.portfoward.MainKt")
 }
 
 tasks.withType(Jar::class) {
     manifest {
-        attributes["Main-Class"] = "MainKt"
+        attributes["Main-Class"] = "net.matsudamper.portfoward.MainKt"
     }
     from(
         configurations.runtimeClasspath.map {
