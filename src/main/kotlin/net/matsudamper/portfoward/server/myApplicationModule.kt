@@ -6,8 +6,8 @@ import io.ktor.server.routing.*
 import net.matsudamper.portfoward.Global
 
 internal fun Application.myApplicationModule(
-        onStart: () -> Unit,
-        onStop: () -> Unit,
+    onStart: () -> Unit,
+    onStop: () -> Unit,
 ) {
     environment.monitor.subscribe(ApplicationStopping) {
         onStart()

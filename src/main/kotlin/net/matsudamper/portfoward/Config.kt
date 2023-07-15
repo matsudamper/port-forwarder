@@ -5,9 +5,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Config(
-        @SerialName("destination") val destination: Destination,
-        @SerialName("key") val key: Key,
-        @SerialName("forward") val forward: Map<String, String>,
+    @SerialName("destination") val destination: Destination,
+    @SerialName("key") val key: Key,
+    @SerialName("forward") val forward: Map<String, String>,
 ) {
     @Serializable
     data class Destination(

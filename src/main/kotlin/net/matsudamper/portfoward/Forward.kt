@@ -17,15 +17,15 @@ import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
 
 class Forward(
-        val localHost: String,
-        val localPort: Int,
-        val serverHost: String,
-        val serverPort: Int,
-        private val keyPath: String?,
-        private val destination: String,
+    val localHost: String,
+    val localPort: Int,
+    val serverHost: String,
+    val serverPort: Int,
+    private val keyPath: String?,
+    private val destination: String,
 ) {
     private val sshClient = SshClient.setUpDefaultClient()
-            .also { it.start() }
+        .also { it.start() }
     val input: MutableStateFlow<List<String>> = MutableStateFlow(listOf())
 
     suspend fun start() {
@@ -44,25 +44,25 @@ class Forward(
                     }
                 }
                 sshClient.connect(destination)
-                        .verify(1.seconds.toJavaDuration())
-                        .session.use { session ->
-                            println("$serverHost:$serverPort -> session:$session")
-                            val channel = session.createLocalPortForwardingTracker(
-                                    SshdSocketAddress.toSshdSocketAddress(
-                                            InetSocketAddress.createUnresolved(localHost, localPort),
-                                    ),
-                                    SshdSocketAddress.toSshdSocketAddress(
-                                            InetSocketAddress.createUnresolved(serverHost, serverPort),
-                                    ),
-                            )
+                    .verify(1.seconds.toJavaDuration())
+                    .session.use { session ->
+                        println("$serverHost:$serverPort -> session:$session")
+                        val channel = session.createLocalPortForwardingTracker(
+                            SshdSocketAddress.toSshdSocketAddress(
+                                InetSocketAddress.createUnresolved(localHost, localPort),
+                            ),
+                            SshdSocketAddress.toSshdSocketAddress(
+                                InetSocketAddress.createUnresolved(serverHost, serverPort),
+                            ),
+                        )
 
-                            if (session.auth().verify().isSuccess) {
-                                println("$serverHost:$serverPort auth success")
-                                channel.session.waitFor(listOf(ClientSession.ClientSessionEvent.CLOSED), 0)
-                            } else {
-                                throw IllegalStateException("auth failed")
-                            }
+                        if (session.auth().verify().isSuccess) {
+                            println("$serverHost:$serverPort auth success")
+                            channel.session.waitFor(listOf(ClientSession.ClientSessionEvent.CLOSED), 0)
+                        } else {
+                            throw IllegalStateException("auth failed")
                         }
+                    }
             }
         }
     }

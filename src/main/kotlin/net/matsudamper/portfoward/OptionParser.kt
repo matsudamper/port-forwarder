@@ -1,6 +1,7 @@
 package net.matsudamper.portfoward
+
 class OptionParser(
-    private val options: List<String>
+    private val options: List<String>,
 ) {
     fun get(): Map<String, String> {
         return options.mapNotNull { text ->

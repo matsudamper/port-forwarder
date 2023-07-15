@@ -15,9 +15,6 @@ import net.matsudamper.portfoward.terminal.MosaicRoot
 import net.matsudamper.portfoward.terminal.TerminalViewModel
 import java.io.File
 import kotlin.system.exitProcess
-import net.matsudamper.portfoward.Config
-import net.matsudamper.portfoward.Global
-import net.matsudamper.portfoward.OptionParser
 
 
 suspend fun main(args: Array<String>) {
@@ -169,12 +166,12 @@ private fun createForward(config: Config): List<Forward> {
         }
 
         Forward(
-                localHost = localHost,
-                localPort = localPort,
-                serverHost = serverHost,
-                serverPort = serverPort,
-                keyPath = key,
-                destination = destination,
+            localHost = localHost,
+            localPort = localPort,
+            serverHost = serverHost,
+            serverPort = serverPort,
+            keyPath = key,
+            destination = destination,
         )
     }
 }
