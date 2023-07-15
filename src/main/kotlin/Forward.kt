@@ -3,16 +3,23 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import org.apache.sshd.client.SshClient
+import org.apache.sshd.client.config.keys.ClientIdentityLoader
 import org.apache.sshd.client.session.ClientSession
+import org.apache.sshd.common.NamedResource
+import org.apache.sshd.common.config.keys.FilePasswordProvider
+import org.apache.sshd.common.session.SessionContext
 import org.apache.sshd.common.util.net.SshdSocketAddress
-import java.lang.IllegalStateException
 import java.net.InetSocketAddress
+import java.security.KeyPair
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.toJavaDuration
 
 class Forward(
+        val localHost: String,
         val localPort: Int,
         val serverHost: String,
         val serverPort: Int,
-        private val keyPath: String,
+        private val keyPath: String?,
         private val destination: String,
 ) {
     private val sshClient = SshClient.setUpDefaultClient()
@@ -24,22 +31,36 @@ class Forward(
 
         withContext(Dispatchers.Default) {
             while (isActive) {
-                sshClient.connect(destination).verify().session.use { session ->
-                    val channel = session.createLocalPortForwardingTracker(
-                            SshdSocketAddress.toSshdSocketAddress(
-                                    InetSocketAddress.createUnresolved("127.0.0.1", localPort)
-                            ),
-                            SshdSocketAddress.toSshdSocketAddress(
-                                    InetSocketAddress.createUnresolved(serverHost, serverPort)
-                            ),
-                    )
-
-                    if (session.auth().verify().isSuccess) {
-                        channel.session.waitFor(listOf(ClientSession.ClientSessionEvent.CLOSED), 0)
-                    } else {
-                        throw IllegalStateException("auth failed")
+                sshClient.clientIdentityLoader = object : ClientIdentityLoader by ClientIdentityLoader.DEFAULT {
+                    override fun loadClientIdentities(session: SessionContext?, location: NamedResource?, provider: FilePasswordProvider?): MutableIterable<KeyPair> {
+                        return if (keyPath != null) {
+                            val resolvedPath = keyPath.replaceFirst("^~".toRegex(), System.getProperty("user.home"))
+                            ClientIdentityLoader.DEFAULT.loadClientIdentities(session, { resolvedPath }, provider)
+                        } else {
+                            ClientIdentityLoader.DEFAULT.loadClientIdentities(session, location, provider)
+                        }
                     }
                 }
+                sshClient.connect(destination)
+                        .verify(1.seconds.toJavaDuration())
+                        .session.use { session ->
+                            println("$serverHost:$serverPort -> session:$session")
+                            val channel = session.createLocalPortForwardingTracker(
+                                    SshdSocketAddress.toSshdSocketAddress(
+                                            InetSocketAddress.createUnresolved(localHost, localPort),
+                                    ),
+                                    SshdSocketAddress.toSshdSocketAddress(
+                                            InetSocketAddress.createUnresolved(serverHost, serverPort),
+                                    ),
+                            )
+
+                            if (session.auth().verify().isSuccess) {
+                                println("$serverHost:$serverPort auth success")
+                                channel.session.waitFor(listOf(ClientSession.ClientSessionEvent.CLOSED), 0)
+                            } else {
+                                throw IllegalStateException("auth failed")
+                            }
+                        }
             }
         }
     }
