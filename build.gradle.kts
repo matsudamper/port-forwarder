@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.archivesName
 plugins {
     id("org.jetbrains.kotlin.plugin.allopen") version "1.8.20"
     kotlin("jvm") version "1.8.20"
-    id("org.graalvm.buildtools.native") version "0.9.18"
+    id("org.graalvm.buildtools.native") version "0.9.19"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.8.20"
     application
     alias(libs.plugins.ktlint)
