@@ -71,4 +71,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           SHORT=$(git rev-parse --short $GITHUB_SHA)
-          gh release create "SHORT" ubuntu/portfoward windows/portfoward.exe
+          gh release create $SHORT ubuntu/portfoward windows/portfoward.exe
