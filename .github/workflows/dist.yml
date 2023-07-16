@@ -43,7 +43,7 @@ jobs:
       - name: Upload binary
         uses: actions/upload-artifact@v2
         with:
-          name: native-${{ matrix.os }}
+          name: javapackage-${{ matrix.os }}
           path: build/javapackage
 
   dist:
