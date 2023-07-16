@@ -48,7 +48,6 @@ class Forward(
                 sshClient.connect(destination)
                     .verify(1.seconds.toJavaDuration())
                     .session.use { session ->
-                        println("$serverHost:$serverPort -> session:$session")
                         val channel = session.createLocalPortForwardingTracker(
                             SshdSocketAddress.toSshdSocketAddress(
                                 InetSocketAddress.createUnresolved(localHost, localPort),
