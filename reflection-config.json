@@ -294,5 +294,25 @@
         "parameterTypes": []
       }
     ]
+  },
+  {
+    "name": "org.apache.sshd.common.util.security.bouncycastle.BouncyCastleSecurityProviderRegistrar",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "org.apache.sshd.common.util.security.eddsa.EdDSASecurityProviderRegistrar",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "javax.crypto.KeyAgreement",
+    "allPublicMethods": true
+  },
+  {
+    "name": "java.security.KeyPairGenerator",
+    "allPublicMethods": true
+  },
+  {
+    "name": "java.security.KeyFactory",
+    "allPublicMethods": true
   }
 ]

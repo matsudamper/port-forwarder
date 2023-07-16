@@ -102,6 +102,7 @@ graalvmNative {
             buildArgs.addAll(
                 "-H:ReflectionConfigurationFiles=${projectDir}/reflection-config.json",
                 "-H:ResourceConfigurationFiles=${projectDir}/resource-config.json",
+                "-H:DynamicProxyConfigurationFiles=${projectDir}/dynamic-proxy-config.json",
                 "--initialize-at-build-time=org.slf4j.LoggerFactory",
             )
         }
