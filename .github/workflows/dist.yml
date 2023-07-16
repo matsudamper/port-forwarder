@@ -70,4 +70,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "$GITHUB_SHA" ubuntu/portfoward windows/portfoward
+          ls
+          ls windows
+          ls macos
+          ls ubuntu
+          gh release create "$GITHUB_SHA" ubuntu/portfoward windows/portfoward.exe
