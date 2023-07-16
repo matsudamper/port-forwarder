@@ -28,6 +28,24 @@ jobs:
           name: native-${{ matrix.os }}
           path: build/native/nativeCompile
 
+  javapackage:
+    strategy:
+      matrix:
+        os: [ "ubuntu", "windows", "macos" ]
+    runs-on: ${{ matrix.os }}-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - run: ./gradlew javapackage
+      - name: Upload binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: native-${{ matrix.os }}
+          path: build/javapackage
+
   dist:
     needs: native_build
     runs-on: ubuntu-latest
