@@ -38,8 +38,7 @@ suspend fun main(args: Array<String>) {
             val forwards = createForward(config)
             Global.forwards.clear()
             Global.forwards.addAll(forwards)
-
-            val forwardJobs = Global.forwards.map { forward ->
+            Global.forwards.map { forward ->
                 launch {
                     try {
                         forward.start()
@@ -58,7 +57,6 @@ suspend fun main(args: Array<String>) {
                     override fun run() {
                         println("shutdown: size=${Global.forwards.size}")
                         Global.forwards.forEach { it.kill() }
-                        forwardJobs.forEach { it.cancel() }
                         println("shutdown: finish")
                     }
                 },

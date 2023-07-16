@@ -13,6 +13,7 @@ import org.apache.sshd.common.session.SessionContext
 import org.apache.sshd.common.util.net.SshdSocketAddress
 import java.net.InetSocketAddress
 import java.security.KeyPair
+import kotlinx.coroutines.Job
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
 
@@ -28,10 +29,11 @@ class Forward(
         .also { it.start() }
     val input: MutableStateFlow<List<String>> = MutableStateFlow(listOf())
 
+    private val job = Job()
     suspend fun start() {
         println("$destination start Forward: $localPort -> $serverHost:$serverPort")
 
-        withContext(Dispatchers.Default) {
+        withContext(Dispatchers.Default + job) {
             while (isActive) {
                 sshClient.clientIdentityLoader = object : ClientIdentityLoader by ClientIdentityLoader.DEFAULT {
                     override fun loadClientIdentities(session: SessionContext?, location: NamedResource?, provider: FilePasswordProvider?): MutableIterable<KeyPair> {
@@ -67,11 +69,8 @@ class Forward(
         }
     }
 
-    fun waitFor() {
-
-    }
-
     fun kill() {
+        job.cancel()
         sshClient.stop()
     }
 
