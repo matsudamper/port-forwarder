@@ -1,3 +1,9 @@
+import groovy.lang.Closure
+import io.github.fvarrui.javapackager.model.HeaderType
+import io.github.fvarrui.javapackager.model.LinuxConfig
+import io.github.fvarrui.javapackager.model.MacConfig
+import io.github.fvarrui.javapackager.model.Platform
+import io.github.fvarrui.javapackager.model.WindowsConfig
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -12,9 +18,12 @@ plugins {
 buildscript {
     dependencies {
         classpath("com.jakewharton.mosaic:mosaic-gradle-plugin:0.6.0")
+        classpath("io.github.fvarrui:javapackager:1.7.2")
     }
 }
+
 apply(plugin = "com.jakewharton.mosaic")
+apply(plugin = "io.github.fvarrui.javapackager.plugin")
 
 base.archivesName.set("portfoward")
 group = "net.matsudamper.portfoward"
@@ -51,6 +60,8 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
+    implementation("org.slf4j:slf4j-api:2.0.7")
+
 
     implementation(kotlin("stdlib"))
 
@@ -83,8 +94,39 @@ allprojects {
     }
 }
 
-tasks.withType<KotlinCompile> {
+val kotlinCompile = tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
+}
+
+tasks.create<io.github.fvarrui.javapackager.gradle.PackageTask>("javapackage") {
+    dependsOn(kotlinCompile)
+    doFirst {
+        outputDirectory.deleteRecursively()
+    }
+    mainClass = application.mainClass.get()
+    isCustomizedJre = true
+    isBundleJre = true
+    isCopyDependencies = false
+    isGenerateInstaller = true
+    isAdministratorRequired = false
+    platform = Platform.auto
+    additionalResources = listOf()
+    linuxConfig = LinuxConfig().also {
+        it.isWrapJar = true
+        it.isGenerateDeb = false
+        it.isGenerateRpm = false
+    }
+    macConfig = MacConfig()
+    outputDirectory = File(buildDir, "packaging")
+
+    @Suppress("UNCHECKED_CAST")
+    winConfig(
+        closureOf<WindowsConfig> {
+            headerType = HeaderType.console
+            isWrapJar = true
+            isGenerateMsi = true
+        } as Closure<WindowsConfig>,
+    )
 }
 
 graalvmNative {
