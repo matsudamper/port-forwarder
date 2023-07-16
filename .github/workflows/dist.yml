@@ -51,24 +51,55 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Download Linux artifact
+      - name: Download Native Linux artifact
         uses: actions/download-artifact@v2
         with:
           name: native-ubuntu
-          path: ubuntu
-      - name: Download Windows artifact
+          path: artifacts/native/ubuntu
+      - name: Download Native Windows artifact
         uses: actions/download-artifact@v2
         with:
           name: native-windows
-          path: windows
-      - name: Download Macos artifact
+          path: artifacts/native/windows
+      - name: Download Native Macos artifact
         uses: actions/download-artifact@v2
         with:
           name: native-macos
-          path: macos
+          path: artifacts/native/macos
+
+      - name: Download Java Package Linux artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: javapackage-ubuntu
+          path: artifacts/javapackage/ubuntu
+      - name: Download Java Package Windows artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: javapackage-windows
+          path: artifacts/javapackage/windows
+      - name: Download Java Package Macos artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: javapackage-macos
+          path: artifacts/javapackage/macos
+
       - name: release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           SHORT=$(git rev-parse --short $GITHUB_SHA)
-          gh release create $SHORT ubuntu/portfoward windows/portfoward.exe
+          mv artifacts/native/ubuntu/portfoward artifacts/native-ubuntu
+          mv artifacts/native/windows/portfoward.exe artifacts/native-windows.exe
+          mv artifacts/native/macos/portfoward artifacts/native-macos
+          
+          zip -r artifacts/javapackage-ubuntu.zip artifacts/javapackage/ubuntu/portfoward/port-foward
+          zip -r artifacts/javapackage-windows.zip artifacts/javapackage/windows/portfoward/port-foward
+          zip -r artifacts/javapackage-macos.zip artifacts/javapackage/macos/portfoward/port-foward
+          
+          gh release create $SHORT \
+            artifacts/native-ubuntu \
+            artifacts/native-windows.exe \
+            artifacts/native-macos \
+            artifacts/javapackage-ubuntu.zip \
+            artifacts/javapackage-windows.zip \
+            artifacts/javapackage-macos.zip
