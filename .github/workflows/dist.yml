@@ -47,7 +47,7 @@ jobs:
           path: build/javapackage
 
   dist:
-    needs: native_build
+    needs: [ native_build, javapackage ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
