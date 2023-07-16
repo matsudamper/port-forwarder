@@ -117,7 +117,7 @@ tasks.create<io.github.fvarrui.javapackager.gradle.PackageTask>("javapackage") {
         it.isGenerateRpm = false
     }
     macConfig = MacConfig()
-    outputDirectory = File(buildDir, "packaging")
+    outputDirectory = File(buildDir, "javapackage")
 
     @Suppress("UNCHECKED_CAST")
     winConfig(
