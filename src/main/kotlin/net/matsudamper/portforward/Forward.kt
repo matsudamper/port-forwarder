@@ -1,6 +1,11 @@
 package net.matsudamper.portforward
 
+import java.net.InetSocketAddress
+import java.security.KeyPair
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.toJavaDuration
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
@@ -11,11 +16,6 @@ import org.apache.sshd.common.NamedResource
 import org.apache.sshd.common.config.keys.FilePasswordProvider
 import org.apache.sshd.common.session.SessionContext
 import org.apache.sshd.common.util.net.SshdSocketAddress
-import java.net.InetSocketAddress
-import java.security.KeyPair
-import kotlinx.coroutines.Job
-import kotlin.time.Duration.Companion.seconds
-import kotlin.time.toJavaDuration
 
 class Forward(
     val localHost: String,

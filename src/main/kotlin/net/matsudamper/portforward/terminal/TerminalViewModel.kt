@@ -1,13 +1,13 @@
 package net.matsudamper.portforward.terminal
 
-import net.matsudamper.portforward.Forward
 import androidx.compose.runtime.MutableState
+import java.io.Reader
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import net.matsudamper.portforward.Forward
 import org.jline.terminal.TerminalBuilder
-import java.io.Reader
 
 class TerminalViewModel(
     private val coroutineScope: CoroutineScope,

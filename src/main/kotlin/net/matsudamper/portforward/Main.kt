@@ -4,18 +4,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import java.io.File
+import kotlin.system.exitProcess
+import kotlinx.coroutines.*
+import kotlinx.serialization.decodeFromString
 import com.charleskorn.kaml.Yaml
 import com.jakewharton.mosaic.runMosaicBlocking
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
-import kotlinx.coroutines.*
-import kotlinx.serialization.decodeFromString
 import net.matsudamper.portforward.server.myApplicationModule
 import net.matsudamper.portforward.terminal.MosaicRoot
 import net.matsudamper.portforward.terminal.TerminalViewModel
-import java.io.File
-import kotlin.system.exitProcess
-
 
 suspend fun main(args: Array<String>) {
 //    System.setProperty("logback.configurationFile", "logback.xml")
@@ -44,7 +43,6 @@ suspend fun main(args: Array<String>) {
                         forward.start()
                         forward.collectText()
                     } catch (_: CancellationException) {
-
                     } catch (e: Throwable) {
                         e.printStackTrace()
                         throw RuntimeException("$e", e)
@@ -85,7 +83,6 @@ suspend fun main(args: Array<String>) {
                         )
                     },
                     configure = {
-
                     },
                 ).start(wait = false)
             }

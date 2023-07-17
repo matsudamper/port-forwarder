@@ -62,7 +62,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     implementation("org.slf4j:slf4j-api:2.0.7")
 
-
     implementation(kotlin("stdlib"))
 
     implementation("com.charleskorn.kaml:kaml:0.53.0")
@@ -93,7 +92,6 @@ allprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
     configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
-
     }
 }
 tasks.withType<Jar> {
