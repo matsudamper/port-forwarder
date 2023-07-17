@@ -113,9 +113,9 @@ jobs:
           mv artifacts/native/windows/portfoward.exe artifacts/native-windows.exe
           mv artifacts/native/macos/portfoward artifacts/native-macos
           
-          zip -r artifacts/javapackage-ubuntu.zip artifacts/javapackage/ubuntu/portfoward/port-foward
-          zip -r artifacts/javapackage-windows.zip artifacts/javapackage/windows/portfoward/port-foward
-          zip -r artifacts/javapackage-macos.zip artifacts/javapackage/macos/portfoward/port-foward
+          zip -r artifacts/javapackage-ubuntu.zip artifacts/javapackage/ubuntu/port-foward
+          zip -r artifacts/javapackage-windows.zip artifacts/javapackage/windows/port-foward
+          zip -r artifacts/javapackage-macos.zip artifacts/javapackage/macos/port-foward
           
           gh release create $SHORT \
             artifacts/native-ubuntu \
