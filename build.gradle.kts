@@ -93,6 +93,10 @@ allprojects {
 
     }
 }
+tasks.withType<Jar> {
+    archiveBaseName.set(base.archivesName)
+    archiveVersion.set("")
+}
 
 val kotlinCompile = tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()

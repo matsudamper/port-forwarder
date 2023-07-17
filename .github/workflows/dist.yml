@@ -46,8 +46,23 @@ jobs:
           name: javapackage-${{ matrix.os }}
           path: build/javapackage
 
+  java:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - run: ./gradlew assemble
+      - name: Upload binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: java
+          path: build/libs
+
   dist:
-    needs: [ native_build, javapackage ]
+    needs: [ native_build, javapackage, java ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -83,6 +98,12 @@ jobs:
           name: javapackage-macos
           path: artifacts/javapackage/macos
 
+      - name: Download Java artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: java
+          path: artifacts/java
+
       - name: release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -102,4 +123,5 @@ jobs:
             artifacts/native-macos \
             artifacts/javapackage-ubuntu.zip \
             artifacts/javapackage-windows.zip \
-            artifacts/javapackage-macos.zip
+            artifacts/javapackage-macos.zip \
+            artifacts/java/portfoward.jar
