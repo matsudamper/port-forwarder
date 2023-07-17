@@ -9,8 +9,54 @@
   "methods":[
     {"name":"<init>","parameterTypes":[] }, 
     {"name":"generate","parameterTypes":[] }, 
-    {"name":"hoge","parameterTypes":[] }
+    {"name":"hoge","parameterTypes":[] }, 
+    {"name":"main","parameterTypes":[] }, 
+    {"name":"startAppServer","parameterTypes":[] }
   ]
+},
+{
+  "name":"GenerateReflectionConfig$main$1",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"GenerateReflectionConfig$main$1$1",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"GenerateReflectionConfig$main$1$1$1",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"GenerateReflectionConfig$main$job$1",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"GenerateReflectionConfig$main$job$1$1",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"GenerateReflectionConfig$startAppServer$1",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"GenerateReflectionConfig$startAppServer$1$1$1$1$2",
+  "queryAllPublicMethods":true,
+  "queryAllDeclaredConstructors":true
+},
+{
+  "name":"GenerateReflectionConfig$startAppServer$1$1$1$2",
+  "queryAllPublicMethods":true,
+  "queryAllDeclaredConstructors":true
+},
+{
+  "name":"GenerateReflectionConfig$startAppServer$1$1$2",
+  "queryAllPublicMethods":true,
+  "queryAllDeclaredConstructors":true
+},
+{
+  "name":"GenerateReflectionConfig$startAppServer$1$2",
+  "queryAllPublicMethods":true,
+  "queryAllDeclaredConstructors":true
 },
 {
   "name":"MainKt$main$2",
@@ -25,8 +71,44 @@
   "name":"android.os.Build$VERSION"
 },
 {
+  "name":"androidx.compose.runtime.Recomposer$recompositionRunner$2",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"androidx.compose.runtime.Recomposer$recompositionRunner$2$2",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"androidx.compose.runtime.Recomposer$runRecomposeAndApplyChanges$2",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"androidx.compose.runtime.SnapshotStateKt__ProduceStateKt$produceState$3",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"androidx.compose.runtime.SnapshotStateKt__SnapshotFlowKt$collectAsState$1",
+  "fields":[{"name":"label"}]
+},
+{
   "name":"com.intellij.rt.execution.application.AppMainV2$Agent",
   "methods":[{"name":"premain","parameterTypes":["java.lang.String","java.lang.instrument.Instrumentation"] }]
+},
+{
+  "name":"com.jakewharton.mosaic.MosaicKt$runMosaic$2",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"com.jakewharton.mosaic.MosaicKt$runMosaic$2$1",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"com.jakewharton.mosaic.MosaicKt$runMosaic$2$2",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"com.jakewharton.mosaic.MosaicKt$runMosaic$2$3",
+  "fields":[{"name":"label"}]
 },
 {
   "name":"com.sun.crypto.provider.DHKeyPairGenerator",
@@ -44,7 +126,23 @@
   "allPublicConstructors":true
 },
 {
+  "name":"io.ktor.network.sockets.ServerSocketImpl$acceptSuspend$1",
+  "fields":[{"name":"label"}]
+},
+{
   "name":"io.ktor.server.application.Application"
+},
+{
+  "name":"io.ktor.server.cio.CIOApplicationEngine$initServerJob$1",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"io.ktor.server.cio.backend.HttpServerKt$httpServer$acceptJob$1",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"io.ktor.server.cio.backend.HttpServerKt$httpServer$serverJob$1",
+  "fields":[{"name":"label"}]
 },
 {
   "name":"io.ktor.utils.io.pool.DefaultPool",
@@ -59,6 +157,10 @@
   "allDeclaredFields":true
 },
 {
+  "name":"java.lang.Class",
+  "methods":[{"name":"getModule","parameterTypes":[] }]
+},
+{
   "name":"java.lang.ClassValue"
 },
 {
@@ -67,6 +169,10 @@
 {
   "name":"java.lang.Exception",
   "allDeclaredFields":true
+},
+{
+  "name":"java.lang.Module",
+  "methods":[{"name":"getDescriptor","parameterTypes":[] }]
 },
 {
   "name":"java.lang.Object",
@@ -96,7 +202,17 @@
   "name":"java.lang.invoke.MethodHandle"
 },
 {
+  "name":"java.lang.module.ModuleDescriptor",
+  "methods":[{"name":"name","parameterTypes":[] }]
+},
+{
   "name":"java.net.StandardSocketOptions"
+},
+{
+  "name":"java.nio.channels.ClosedChannelException",
+  "allDeclaredFields":true,
+  "queryAllPublicConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"java.security.AlgorithmParametersSpi"
@@ -208,12 +324,65 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"kotlinx.coroutines.DelayKt$awaitCancellation$1",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"kotlinx.coroutines.JobCancellationException",
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"kotlinx.coroutines.TimeoutCancellationException",
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"kotlinx.coroutines.flow.StateFlowImpl$collect$1",
+  "fields":[{"name":"label"}]
+},
+{
   "name":"kotlinx.coroutines.internal.StackTraceRecoveryKt"
+},
+{
+  "name":"net.matsudamper.portforward.MainKt$main$1",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"net.matsudamper.portforward.MainKt$main$2",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"net.matsudamper.portforward.MainKt$main$2$1$1$1",
+  "fields":[{"name":"label"}]
 },
 {
   "name":"net.matsudamper.portforward.MainKt$main$2$2$2",
   "queryAllPublicMethods":true,
   "queryAllDeclaredConstructors":true
+},
+{
+  "name":"net.matsudamper.portforward.MainKt$main$2$3",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"net.matsudamper.portforward.MainKt$main$2$3$1",
+  "fields":[{"name":"label"}]
+},
+{
+  "name":"net.matsudamper.portforward.OptionParserTest",
+  "allDeclaredFields":true,
+  "allDeclaredClasses":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"noValueTest","parameterTypes":[] }, 
+    {"name":"parseTest","parameterTypes":[] }
+  ]
+},
+{
+  "name":"net.matsudamper.portforward.terminal.TerminalViewModel$uiStateFlow$1$1",
+  "fields":[{"name":"label"}]
 },
 {
   "name":"org.apache.sshd.common.SshException",
@@ -264,6 +433,7 @@
   "name":"org.gradle.api.internal.tasks.testing.TestResultProcessor",
   "methods":[
     {"name":"completed","parameterTypes":["java.lang.Object","org.gradle.api.internal.tasks.testing.TestCompleteEvent"] }, 
+    {"name":"failure","parameterTypes":["java.lang.Object","org.gradle.api.tasks.testing.TestFailure"] }, 
     {"name":"started","parameterTypes":["org.gradle.api.internal.tasks.testing.TestDescriptorInternal","org.gradle.api.internal.tasks.testing.TestStartEvent"] }
   ]
 },
