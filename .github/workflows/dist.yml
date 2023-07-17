@@ -117,7 +117,7 @@ jobs:
           zip -r artifacts/javapackage-windows.zip artifacts/javapackage/windows/portforward
           zip -r artifacts/javapackage-macos.zip artifacts/javapackage/macos/portforward
           
-          gh release create $SHORT \
+          gh release create $SHORT --target $GITHUB_SHA \
             artifacts/native-ubuntu \
             artifacts/native-windows.exe \
             artifacts/native-macos \
