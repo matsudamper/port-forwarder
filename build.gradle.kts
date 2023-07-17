@@ -84,6 +84,9 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    jvmArgs = listOf(
+        "-agentlib:native-image-agent=config-merge-dir=src/main/resources/META-INF/native-image/auto/",
+    )
 }
 
 allprojects {
@@ -146,9 +149,6 @@ graalvmNative {
             mainClass.set(application.mainClass.get())
 
             buildArgs.addAll(
-                "-H:ReflectionConfigurationFiles=${projectDir}/reflection-config.json",
-                "-H:ResourceConfigurationFiles=${projectDir}/resource-config.json",
-                "-H:DynamicProxyConfigurationFiles=${projectDir}/dynamic-proxy-config.json",
                 "--initialize-at-build-time=org.slf4j.LoggerFactory",
             )
         }
