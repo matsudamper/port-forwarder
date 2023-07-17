@@ -124,4 +124,5 @@ jobs:
             artifacts/javapackage-ubuntu.zip \
             artifacts/javapackage-windows.zip \
             artifacts/javapackage-macos.zip \
-            artifacts/java/portfoward.jar
+            artifacts/java/portfoward.jar \
+            artifacts/javapackage/ubuntu/port-foward.AppImage
