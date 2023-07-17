@@ -113,9 +113,9 @@ jobs:
           mv artifacts/native/windows/portforward.exe artifacts/native-windows.exe
           mv artifacts/native/macos/portforward artifacts/native-macos
           
-          zip -r artifacts/javapackage-ubuntu.zip artifacts/javapackage/ubuntu/port-forward
-          zip -r artifacts/javapackage-windows.zip artifacts/javapackage/windows/port-forward
-          zip -r artifacts/javapackage-macos.zip artifacts/javapackage/macos/port-forward
+          zip -r artifacts/javapackage-ubuntu.zip artifacts/javapackage/ubuntu/portforward
+          zip -r artifacts/javapackage-windows.zip artifacts/javapackage/windows/portforward
+          zip -r artifacts/javapackage-macos.zip artifacts/javapackage/macos/portforward
           
           gh release create $SHORT \
             artifacts/native-ubuntu \
@@ -125,4 +125,4 @@ jobs:
             artifacts/javapackage-windows.zip \
             artifacts/javapackage-macos.zip \
             artifacts/java/portforward.jar \
-            artifacts/javapackage/ubuntu/port-forward.AppImage
+            artifacts/javapackage/ubuntu/portforward.AppImage

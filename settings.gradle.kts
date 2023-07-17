@@ -1,4 +1,4 @@
-rootProject.name = "port-foward"
+rootProject.name = "portforward"
 
 dependencyResolutionManagement {
     @Suppress("UnstableApiUsage")
