@@ -15,6 +15,6 @@ class OptionParser(
     }
 
     companion object {
-        private val Regex = """^--(.+?)=(.+?)$""".toRegex()
+        private val Regex = """^--(.+?)(?:=(.+?))*$""".toRegex()
     }
 }

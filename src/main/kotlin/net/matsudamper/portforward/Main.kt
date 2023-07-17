@@ -21,6 +21,7 @@ suspend fun main(args: Array<String>) {
     val options = OptionParser(args.toList()).get()
     val port = options["port"]?.toIntOrNull()
     val configFile = options["config"]
+    val isDebug = options["debug"] != null
 
     println("start server...")
     println("port=$port")
@@ -44,8 +45,11 @@ suspend fun main(args: Array<String>) {
                         forward.collectText()
                     } catch (_: CancellationException) {
                     } catch (e: Throwable) {
-                        e.printStackTrace()
-                        throw RuntimeException("$e", e)
+                        if (isDebug) {
+                            e.printStackTrace()
+                        }
+
+                        println("connection failure: ${forward.localHost}:${forward.localPort} -> ${forward.serverHost}:${forward.serverPort}")
                     }
                 }
             }
