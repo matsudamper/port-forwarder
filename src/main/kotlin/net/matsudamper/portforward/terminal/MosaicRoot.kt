@@ -1,4 +1,4 @@
-package net.matsudamper.portfoward.terminal
+package net.matsudamper.portforward.terminal
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember

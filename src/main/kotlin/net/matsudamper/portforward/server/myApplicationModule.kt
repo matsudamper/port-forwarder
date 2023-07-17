@@ -1,9 +1,9 @@
-package net.matsudamper.portfoward.server
+package net.matsudamper.portforward.server
 
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import net.matsudamper.portfoward.Global
+import net.matsudamper.portforward.Global
 
 internal fun Application.myApplicationModule(
     onStart: () -> Unit,

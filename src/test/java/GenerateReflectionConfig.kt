@@ -1,6 +1,5 @@
 import kotlinx.coroutines.runBlocking
-import net.matsudamper.portfoward.Forward
-import net.matsudamper.portfoward.main
+import net.matsudamper.portforward.main
 import org.junit.jupiter.api.Test
 
 class GenerateReflectionConfig {

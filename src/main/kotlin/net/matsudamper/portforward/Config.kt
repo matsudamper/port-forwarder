@@ -1,4 +1,4 @@
-package net.matsudamper.portfoward
+package net.matsudamper.portforward
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

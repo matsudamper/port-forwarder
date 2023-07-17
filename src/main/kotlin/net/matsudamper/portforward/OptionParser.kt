@@ -1,4 +1,4 @@
-package net.matsudamper.portfoward
+package net.matsudamper.portforward
 
 class OptionParser(
     private val options: List<String>,

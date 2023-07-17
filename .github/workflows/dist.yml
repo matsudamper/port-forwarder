@@ -109,9 +109,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           SHORT=$(git rev-parse --short $GITHUB_SHA)
-          mv artifacts/native/ubuntu/portfoward artifacts/native-ubuntu
-          mv artifacts/native/windows/portfoward.exe artifacts/native-windows.exe
-          mv artifacts/native/macos/portfoward artifacts/native-macos
+          mv artifacts/native/ubuntu/portforward artifacts/native-ubuntu
+          mv artifacts/native/windows/portforward.exe artifacts/native-windows.exe
+          mv artifacts/native/macos/portforward artifacts/native-macos
           
           zip -r artifacts/javapackage-ubuntu.zip artifacts/javapackage/ubuntu/port-foward
           zip -r artifacts/javapackage-windows.zip artifacts/javapackage/windows/port-foward
@@ -124,5 +124,5 @@ jobs:
             artifacts/javapackage-ubuntu.zip \
             artifacts/javapackage-windows.zip \
             artifacts/javapackage-macos.zip \
-            artifacts/java/portfoward.jar \
+            artifacts/java/portforward.jar \
             artifacts/javapackage/ubuntu/port-foward.AppImage

@@ -1,4 +1,4 @@
-package net.matsudamper.portfoward
+package net.matsudamper.portforward
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

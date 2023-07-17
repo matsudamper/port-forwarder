@@ -25,20 +25,20 @@ buildscript {
 apply(plugin = "com.jakewharton.mosaic")
 apply(plugin = "io.github.fvarrui.javapackager.plugin")
 
-base.archivesName.set("portfoward")
-group = "net.matsudamper.portfoward"
+base.archivesName.set("portforward")
+group = "net.matsudamper.portforward"
 version = "1.0-SNAPSHOT"
 
 application {
     applicationDefaultJvmArgs = listOf(
         "-agentlib:native-image-agent=config-merge-dir=src/main/resources/META-INF/native-image/auto/",
     )
-    mainClass.set("net.matsudamper.portfoward.MainKt")
+    mainClass.set("net.matsudamper.portforward.MainKt")
 }
 
 tasks.withType(Jar::class) {
     manifest {
-        attributes["Main-Class"] = "net.matsudamper.portfoward.MainKt"
+        attributes["Main-Class"] = "net.matsudamper.portforward.MainKt"
     }
     from(
         configurations.runtimeClasspath.map {

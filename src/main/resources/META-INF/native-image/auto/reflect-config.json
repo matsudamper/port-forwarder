@@ -149,7 +149,7 @@
   "name":"kotlinx.coroutines.internal.StackTraceRecoveryKt"
 },
 {
-  "name":"net.matsudamper.portfoward.MainKt$main$2$2$2",
+  "name":"net.matsudamper.portforward.MainKt$main$2$2$2",
   "queryAllPublicMethods":true,
   "queryAllDeclaredConstructors":true
 },

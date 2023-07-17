@@ -1,4 +1,4 @@
-package net.matsudamper.portfoward
+package net.matsudamper.portforward
 
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -10,9 +10,9 @@ import io.ktor.server.cio.*
 import io.ktor.server.engine.*
 import kotlinx.coroutines.*
 import kotlinx.serialization.decodeFromString
-import net.matsudamper.portfoward.server.myApplicationModule
-import net.matsudamper.portfoward.terminal.MosaicRoot
-import net.matsudamper.portfoward.terminal.TerminalViewModel
+import net.matsudamper.portforward.server.myApplicationModule
+import net.matsudamper.portforward.terminal.MosaicRoot
+import net.matsudamper.portforward.terminal.TerminalViewModel
 import java.io.File
 import kotlin.system.exitProcess
 
