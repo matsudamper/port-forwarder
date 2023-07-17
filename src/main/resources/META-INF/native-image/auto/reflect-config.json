@@ -8,15 +8,51 @@
   "queryAllDeclaredConstructors":true,
   "methods":[
     {"name":"<init>","parameterTypes":[] }, 
+    {"name":"generate","parameterTypes":[] }, 
     {"name":"hoge","parameterTypes":[] }
   ]
+},
+{
+  "name":"MainKt$main$2",
+  "queryAllPublicMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"[Ljava.lang.Object;"
 },
 {
+  "name":"android.os.Build$VERSION"
+},
+{
+  "name":"com.intellij.rt.execution.application.AppMainV2$Agent",
+  "methods":[{"name":"premain","parameterTypes":["java.lang.String","java.lang.instrument.Instrumentation"] }]
+},
+{
   "name":"com.sun.crypto.provider.DHKeyPairGenerator",
   "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.ktor.http.HttpStatusCode"
+},
+{
+  "name":"io.ktor.network.selector.InterestSuspensionsMap",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true,
+  "allPublicMethods":true,
+  "allDeclaredConstructors":true,
+  "allPublicConstructors":true
+},
+{
+  "name":"io.ktor.server.application.Application"
+},
+{
+  "name":"io.ktor.utils.io.pool.DefaultPool",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true,
+  "allPublicMethods":true,
+  "allDeclaredConstructors":true,
+  "allPublicConstructors":true
 },
 {
   "name":"java.io.IOException",
@@ -67,11 +103,11 @@
 },
 {
   "name":"java.security.KeyFactory",
-  "methods":[{"name":"getInstance","parameterTypes":["java.lang.String"] }]
+  "allPublicMethods":true
 },
 {
   "name":"java.security.KeyPairGenerator",
-  "methods":[{"name":"getInstance","parameterTypes":["java.lang.String"] }]
+  "allPublicMethods":true
 },
 {
   "name":"java.security.MessageDigest",
@@ -83,6 +119,18 @@
 {
   "name":"java.security.Signature",
   "methods":[{"name":"getInstance","parameterTypes":["java.lang.String"] }]
+},
+{
+  "name":"java.security.interfaces.ECPrivateKey"
+},
+{
+  "name":"java.security.interfaces.ECPublicKey"
+},
+{
+  "name":"java.security.interfaces.RSAPrivateKey"
+},
+{
+  "name":"java.security.interfaces.RSAPublicKey"
 },
 {
   "name":"java.util.HashSet"
@@ -113,11 +161,25 @@
 },
 {
   "name":"javax.crypto.KeyAgreement",
-  "methods":[{"name":"getInstance","parameterTypes":["java.lang.String"] }]
+  "allPublicMethods":true
 },
 {
   "name":"kotlin.Metadata",
-  "queryAllPublicMethods":true
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true,
+  "methods":[
+    {"name":"bv","parameterTypes":[] }, 
+    {"name":"d1","parameterTypes":[] }, 
+    {"name":"d2","parameterTypes":[] }, 
+    {"name":"k","parameterTypes":[] }, 
+    {"name":"mv","parameterTypes":[] }, 
+    {"name":"pn","parameterTypes":[] }, 
+    {"name":"xi","parameterTypes":[] }, 
+    {"name":"xs","parameterTypes":[] }
+  ]
+},
+{
+  "name":"kotlin.Unit"
 },
 {
   "name":"kotlin.annotation.MustBeDocumented",
@@ -158,12 +220,26 @@
   "allDeclaredFields":true
 },
 {
+  "name":"org.apache.sshd.common.session.SessionListener",
+  "methods":[
+    {"name":"sessionCreated","parameterTypes":["org.apache.sshd.common.session.Session"] }, 
+    {"name":"sessionEstablished","parameterTypes":["org.apache.sshd.common.session.Session"] }, 
+    {"name":"sessionEvent","parameterTypes":["org.apache.sshd.common.session.Session","org.apache.sshd.common.session.SessionListener$Event"] }, 
+    {"name":"sessionNegotiationEnd","parameterTypes":["org.apache.sshd.common.session.Session","java.util.Map","java.util.Map","java.util.Map","java.lang.Throwable"] }, 
+    {"name":"sessionNegotiationOptionsCreated","parameterTypes":["org.apache.sshd.common.session.Session","java.util.Map"] }, 
+    {"name":"sessionNegotiationStart","parameterTypes":["org.apache.sshd.common.session.Session","java.util.Map","java.util.Map"] }, 
+    {"name":"sessionPeerIdentificationLine","parameterTypes":["org.apache.sshd.common.session.Session","java.lang.String","java.util.List"] }, 
+    {"name":"sessionPeerIdentificationReceived","parameterTypes":["org.apache.sshd.common.session.Session","java.lang.String","java.util.List"] }, 
+    {"name":"sessionPeerIdentificationSend","parameterTypes":["org.apache.sshd.common.session.Session","java.lang.String","java.util.List"] }
+  ]
+},
+{
   "name":"org.apache.sshd.common.util.security.bouncycastle.BouncyCastleSecurityProviderRegistrar",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
+  "allDeclaredConstructors":true
 },
 {
   "name":"org.apache.sshd.common.util.security.eddsa.EdDSASecurityProviderRegistrar",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
+  "allDeclaredConstructors":true
 },
 {
   "name":"org.apache.sshd.mina.MinaServiceFactory$MinaProcessor",
@@ -309,6 +385,14 @@
   "queryAllPublicMethods":true
 },
 {
+  "name":"sun.security.provider.DRBG",
+  "methods":[{"name":"<init>","parameterTypes":["java.security.SecureRandomParameters"] }]
+},
+{
+  "name":"sun.security.provider.DSAKeyFactory",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"sun.security.provider.MD5",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -334,6 +418,14 @@
 },
 {
   "name":"sun.security.provider.SHA5$SHA512",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.security.rsa.RSAKeyFactory$Legacy",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.security.rsa.RSASignature$SHA512withRSA",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 }
 ]

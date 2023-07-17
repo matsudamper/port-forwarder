@@ -2,6 +2,12 @@
   "resources":{
   "includes":[
     {
+      "pattern":"\\QMETA-INF/services/kotlin.reflect.jvm.internal.impl.builtins.BuiltInsLoader\\E"
+    }, 
+    {
+      "pattern":"\\QMETA-INF/services/kotlin.reflect.jvm.internal.impl.resolve.ExternalOverridabilityCondition\\E"
+    }, 
+    {
       "pattern":"\\QMETA-INF/services/org.apache.sshd.common.io.IoServiceFactoryFactory\\E"
     }, 
     {
@@ -18,6 +24,9 @@
     }, 
     {
       "pattern":"\\QMETA-INF/services/org/jline/terminal/provider/jna\\E"
+    }, 
+    {
+      "pattern":"\\Qorg/apache/sshd/sshd-version.properties\\E"
     }, 
     {
       "pattern":"\\Qorg/fusesource/jansi/internal/native/Linux/x86_64/libjansi.so\\E"
