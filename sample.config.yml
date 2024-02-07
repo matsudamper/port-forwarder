@@ -6,5 +6,5 @@ key:
   text: ~/.ssh/key
 
 forward:
-  10002: example1.internal:8080
-  10003: example2.internal:8080
+  127.0.0.1:10002: example1.internal:8080
+  127.0.0.1:10003: example2.internal:8080
