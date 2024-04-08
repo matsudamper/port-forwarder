@@ -45,25 +45,29 @@ class Forward(
                         }
                     }
                 }
-                sshClient.connect(destination)
-                    .verify(1.seconds.toJavaDuration())
-                    .session.use { session ->
-                        val channel = session.createLocalPortForwardingTracker(
-                            SshdSocketAddress.toSshdSocketAddress(
-                                InetSocketAddress.createUnresolved(localHost, localPort),
-                            ),
-                            SshdSocketAddress.toSshdSocketAddress(
-                                InetSocketAddress.createUnresolved(serverHost, serverPort),
-                            ),
-                        )
+                runCatching {
+                    sshClient.connect(destination)
+                        .verify(1.seconds.toJavaDuration())
+                        .session.use { session ->
+                            val channel = session.createLocalPortForwardingTracker(
+                                SshdSocketAddress.toSshdSocketAddress(
+                                    InetSocketAddress.createUnresolved(localHost, localPort),
+                                ),
+                                SshdSocketAddress.toSshdSocketAddress(
+                                    InetSocketAddress.createUnresolved(serverHost, serverPort),
+                                ),
+                            )
 
-                        if (session.auth().verify().isSuccess) {
-                            println("$serverHost:$serverPort auth success")
-                            channel.session.waitFor(listOf(ClientSession.ClientSessionEvent.CLOSED), 0)
-                        } else {
-                            throw IllegalStateException("auth failed")
+                            if (session.auth().verify().isSuccess) {
+                                println("$serverHost:$serverPort auth success")
+                                channel.session.waitFor(listOf(ClientSession.ClientSessionEvent.CLOSED), 0)
+                            } else {
+                                throw IllegalStateException("auth failed")
+                            }
                         }
-                    }
+                }.onFailure {
+                    throw Exception("Failed to connect to $destination", it)
+                }.getOrThrow()
             }
         }
     }
